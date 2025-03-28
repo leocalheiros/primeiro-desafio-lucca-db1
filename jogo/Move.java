@@ -7,12 +7,14 @@ public enum Move {
 
     private String move;
 
-    Move(String move){
+    Move(String move) {
         this.move = move;
     }
-    public String getEscolha(){
+
+    public String getMove() {
         return move;
     }
+
     @Override
     public String toString() {
         return move;

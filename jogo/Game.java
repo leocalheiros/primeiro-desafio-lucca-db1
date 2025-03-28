@@ -1,9 +1,5 @@
 package jogo;
 
-import jdk.net.ExtendedSocketOptions;
-
-
-import java.beans.PropertyEditorSupport;
 import java.util.LinkedList;
 
 import java.util.List;
@@ -40,10 +36,7 @@ public class Game {
 
         System.out.println("\n" + "=".repeat(30) + "\n");
     }
-//    private void showEntireHistory(){
-//        for (Round round: matchHistory)
-//            System.out.println(round);
-//    }
+
     private static boolean equalsTo(String expected, String typed) {
         if (typed == null || typed.length() != 1) return false;
         return expected.toLowerCase().contains(typed.toLowerCase());
@@ -70,7 +63,7 @@ public class Game {
             System.out.println("\n".repeat(2) + round);
 
             showHistory();
-            //showEntireHistory();
+
 
             System.out.println(" Do you wanna play again [Y / N] : ");
             answer = scanner.next().toLowerCase();

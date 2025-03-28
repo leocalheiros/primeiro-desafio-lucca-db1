@@ -12,15 +12,15 @@ import java.util.Scanner;
 public class Game {
     private List<Round> matchHistory = new LinkedList<>();
 
-    private Move getMove(String name, Scanner scanner){
+    private Move getMove(String name, Scanner scanner) {
         Move move = null;
         boolean valid = false;
-        while (!valid){
+        while (!valid) {
             System.out.println(name + " Choose your move (ROCK, SCISSOR OR PAPER): ");
             try {
                 move = Move.valueOf(scanner.next().toUpperCase());
                 valid = true;
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Invalid Move! Try again.");
             }
         }
@@ -28,50 +28,53 @@ public class Game {
 
     }
 
-    private void addRoundToHistory(Round round) {
-        if (matchHistory.size() >= 5) {
-            matchHistory.removeFirst();
-        }
-        matchHistory.add(round);
-    }
+    private void showHistory() {
+        System.out.println("\n" + "=".repeat(30) + "\n" + "Match History of the last 5 games: " + "\n");
 
-    private void showHistory(){
-        System.out.println("\n"+"=".repeat(30) +"\n"+"Match History of the last 5 games: "+"\n");
-        for(Round round: matchHistory){
+        int start = Math.max(0, matchHistory.size() - 5);
+        List<Round> lastRounds = matchHistory.subList(start, matchHistory.size());
+
+        for (Round round : lastRounds) {
             System.out.println(round);
         }
-        System.out.println("\n"+"=".repeat(30)+"\n");
-    }
 
-    private static boolean equalsTo(String expected, String typed){
+        System.out.println("\n" + "=".repeat(30) + "\n");
+    }
+//    private void showEntireHistory(){
+//        for (Round round: matchHistory)
+//            System.out.println(round);
+//    }
+    private static boolean equalsTo(String expected, String typed) {
         if (typed == null || typed.length() != 1) return false;
         return expected.toLowerCase().contains(typed.toLowerCase());
 
     }
-    public void start(){
+
+    public void start() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter player 1's name : ");
         Player player1 = new Player(scanner.nextLine());
 
-        System.out.println("\n"+"Enter player 2's name: ");
+        System.out.println("\n" + "Enter player 2's name: ");
         Player player2 = new Player(scanner.nextLine());
 
         String answer = "";
-        while (!equalsTo("n",answer)){
-            player1.setMove(getMove(player1.getName(),scanner));
-            player2.setMove(getMove(player2.getName(),scanner));
+        while (!equalsTo("n", answer)) {
+            player1.setMove(getMove(player1.getName(), scanner));
+            player2.setMove(getMove(player2.getName(), scanner));
 
             Round round = new Round(player1, player2);
-            addRoundToHistory(round);
+            matchHistory.add(round);
 
-            System.out.println("\n".repeat(2)+round);
+            System.out.println("\n".repeat(2) + round);
 
             showHistory();
+            //showEntireHistory();
 
             System.out.println(" Do you wanna play again [Y / N] : ");
             answer = scanner.next().toLowerCase();
-            while (!equalsTo("yn",answer)){
+            while (!equalsTo("yn", answer)) {
                 System.out.println("Invalid Answer! Please type [Y]es or [N]o: ");
                 answer = scanner.next().toLowerCase();
             }
@@ -79,7 +82,8 @@ public class Game {
         }
         scanner.close();
     }
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         Game game = new Game();
         game.start();
     }
